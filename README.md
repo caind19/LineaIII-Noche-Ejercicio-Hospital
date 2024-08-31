@@ -1,6 +1,6 @@
 Sistema de Registro de datos Hospital "Sanitel" (Ejemplo) 
 
-¡Hola! Soy estudiante de la Universidad de Cundinamarca, del núcleo temático de Línea de Profundización III Noche. 
+Soy estudiante de la Universidad de Cundinamarca, del núcleo temático de Línea de Profundización III Noche. 
 Este es un proyecto para gestionar datos un hospital usando Kotlin. 🚀
 📋 Descripción
 
