@@ -7,9 +7,9 @@ Descripción
 Esta aplicación en Kotlin permite:
 
     Registrar empleados, pacientes y médicos.
-    Agendar citas médicas.
-    Consultar médicos por especialidad.
-    Ver pacientes atendidos por un médico.
+    Registrar citas médicas.
+    Listar médicos por especialidad.
+    Listar pacientes atendidos por un médico específico.
 
 Cómo Empezar
 
