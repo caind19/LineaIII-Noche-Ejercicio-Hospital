@@ -1,21 +1,16 @@
-import java.time.LocalDate
-
 open class Empleado(
     DNI: String,
     nombre: String,
     apellido: String,
-    fechaNacimiento: LocalDate,
+    fechaNacimiento: String,
     direccion: String,
     ciudadProcedencia: String,
     val codigoEmpleado: String,
-    val numeroHorasExtras: Int,
-    val fechaIngreso: LocalDate,
+    val horasExtras: Int,
+    val fechaIngreso: String,
     val area: String,
     val cargo: String,
-    val esEmpleadoPlanilla: Boolean, // Booleano para determinar el tipo de empleado
-    val salarioMensual: Double? = null, // Salario mensual, solo relevante para Planilla
-    val porcentajeAdicionalHoraExtra: Double? = null, // Porcentaje adicional, solo relevante para Planilla
-    val honorariosPorHora: Double? = null, // Honorarios por hora, solo relevante para Eventual
-    val horasTotales: Int? = null, // Horas totales, solo relevante para Eventual
-    val fechaTerminoContrato: LocalDate? = null // Fecha de término, solo relevante para Eventual
+    val esPorPlanilla: Boolean,  // Atributo booleano para indicar si es empleado por planilla
+    val salario: Double,         // Salario mensual si es empleado por planilla
+    val honorariosPorHora: Double // Honorarios por hora si es empleado eventual
 ) : Persona(DNI, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia)

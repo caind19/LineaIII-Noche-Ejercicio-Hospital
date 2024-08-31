@@ -1,161 +1,199 @@
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.Scanner
-
 fun main() {
-    val hospital = Hospital()
-    val scanner = Scanner(System.`in`)
+    val empleados = mutableListOf<Empleado>()
+    val pacientes = mutableListOf<Paciente>()
+    val medicos = mutableListOf<Medico>()
+    val citas = mutableListOf<Cita>()
 
     while (true) {
-        println("Seleccione una opción:")
-        println("1. Registrar paciente")
-        println("2. Registrar médico")
-        println("3. Registrar cita médica")
-        println("4. Listar médicos por especialidad")
-        println("5. Listar pacientes atendidos por médico")
-        println("6. Salir")
-
-        when (scanner.nextInt()) {
+        println("|||| Registro de datos del Hospital Sanitel:  ||")
+        println("|||| 1. Registrar Empleado                    ||")
+        println("|||| 2. Registrar Paciente                    ||")
+        println("|||| 3. Registrar Médico                      ||")
+        println("|||| 4. Registrar Cita                        ||")
+        println("|||| 5. Listar Médicos por Especialidad       ||")
+        println("|||| 6. Listar Pacientes atendidos por Médico ||")
+        println("|||| 7. Salir                                 ||")
+        print(">>>> Seleccione una opción:>>                 ")
+        when (readLine()!!.toInt()) {
             1 -> {
-                // Registrar paciente
-                scanner.nextLine() // Consumir el salto de línea
-                println("Ingrese DNI del paciente:")
-                val dni = scanner.nextLine()
-                println("Ingrese nombre del paciente:")
-                val nombre = scanner.nextLine()
-                println("Ingrese apellido del paciente:")
-                val apellido = scanner.nextLine()
-                println("Ingrese fecha de nacimiento (yyyy-mm-dd):")
-                val fechaNacimiento = LocalDate.parse(scanner.nextLine())
-                println("Ingrese dirección del paciente:")
-                val direccion = scanner.nextLine()
-                println("Ingrese ciudad de procedencia del paciente:")
-                val ciudadProcedencia = scanner.nextLine()
-                println("Ingrese número de historia clínica:")
-                val numeroHistoriaClinica = scanner.nextLine()
-                println("Ingrese sexo del paciente:")
-                val sexo = scanner.nextLine()
-                println("Ingrese grupo sanguíneo del paciente:")
-                val grupoSanguineo = scanner.nextLine()
-                println("Ingrese lista de medicamentos a los que es alérgico (separados por comas):")
-                val medicamentosAlergicos = scanner.nextLine().split(",").map { it.trim() }
-
-                val paciente = Paciente(
-                    DNI, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia,
-                    numeroHistoriaClinica, sexo, grupoSanguineo, medicamentosAlergia
-                )
-                hospital.registrarPaciente(paciente)
-                println("Paciente registrado exitosamente.")
+                // Registro de Empleado
+                println("Ingrese el DNI del empleado:")
+                val dni = readLine()!!
+                println("Ingrese el nombre del empleado:")
+                val nombre = readLine()!!
+                println("Ingrese el apellido del empleado:")
+                val apellido = readLine()!!
+                println("Ingrese la fecha de nacimiento del empleado:")
+                val fechaNacimiento = readLine()!!
+                println("Ingrese la dirección del empleado:")
+                val direccion = readLine()!!
+                println("Ingrese la ciudad de procedencia del empleado:")
+                val ciudadProcedencia = readLine()!!
+                println("Ingrese el código de empleado:")
+                val codigoEmpleado = readLine()!!
+                println("Ingrese las horas extras trabajadas:")
+                val horasExtras = readLine()!!.toInt()
+                println("Ingrese la fecha de ingreso:")
+                val fechaIngreso = readLine()!!
+                println("Ingrese el área de trabajo:")
+                val area = readLine()!!
+                println("Ingrese el cargo:")
+                val cargo = readLine()!!
+                println("¿Es empleado por planilla? (true/false):")
+                val esPorPlanilla = readLine()!!.toBoolean()
+                if (esPorPlanilla) {
+                    println("Ingrese el salario mensual:")
+                    val salario = readLine()!!.toDouble()
+                    empleados.add(
+                        Empleado(
+                            dni, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia,
+                            codigoEmpleado, horasExtras, fechaIngreso, area, cargo, true, salario, 0.0
+                        )
+                    )
+                } else {
+                    println("Ingrese los honorarios por hora:")
+                    val honorariosPorHora = readLine()!!.toDouble()
+                    empleados.add(
+                        Empleado(
+                            dni, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia,
+                            codigoEmpleado, horasExtras, fechaIngreso, area, cargo, false, 0.0, honorariosPorHora
+                        )
+                    )
+                }
+                println("Empleado registrado con éxito.")
             }
             2 -> {
-                // Registrar médico
-                scanner.nextLine() // Consumir el salto de línea
-                println("Ingrese DNI del médico:")
-                val dni = scanner.nextLine()
-                println("Ingrese nombre del médico:")
-                val nombre = scanner.nextLine()
-                println("Ingrese apellido del médico:")
-                val apellido = scanner.nextLine()
-                println("Ingrese fecha de nacimiento (yyyy-mm-dd):")
-                val fechaNacimiento = LocalDate.parse(scanner.nextLine())
-                println("Ingrese dirección del médico:")
-                val direccion = scanner.nextLine()
-                println("Ingrese ciudad de procedencia del médico:")
-                val ciudadProcedencia = scanner.nextLine()
-                println("Ingrese código del empleado:")
-                val codigoEmpleado = scanner.nextLine()
-                println("Ingrese número de horas extras:")
-                val numeroHorasExtras = scanner.nextInt()
-                println("Ingrese fecha de ingreso (yyyy-mm-dd):")
-                val fechaIngreso = LocalDate.parse(scanner.next())
-                println("Ingrese área del médico:")
-                val area = scanner.nextLine()
-                println("Ingrese cargo del médico:")
-                val cargo = scanner.nextLine()
-                println("¿Es empleado por planilla? (true/false):")
-                val esEmpleadoPlanilla = scanner.nextBoolean()
-                println("Ingrese salario mensual (dejar en blanco si es eventual):")
-                val salarioMensual = if (esEmpleadoPlanilla) scanner.nextDouble() else null
-                println("Ingrese porcentaje adicional por hora extra (dejar en blanco si es eventual):")
-                val porcentajeAdicionalHoraExtra = if (esEmpleadoPlanilla) scanner.nextDouble() else null
-                println("Ingrese honorarios por hora (dejar en blanco si es por planilla):")
-                val honorariosPorHora = if (!esEmpleadoPlanilla) scanner.nextDouble() else null
-                println("Ingrese número total de horas (dejar en blanco si es por planilla):")
-                val horasTotales = if (!esEmpleadoPlanilla) scanner.nextInt() else null
-                println("Ingrese fecha de término del contrato (dejar en blanco si es por planilla):")
-                val fechaTerminoContrato = if (!esEmpleadoPlanilla) LocalDate.parse(scanner.next()) else null
-                println("Ingrese especialidad del médico:")
-                val especialidad = scanner.nextLine()
-                println("Ingrese servicio del médico:")
-                val servicio = scanner.nextLine()
-                println("Ingrese número de consultorio:")
-                val numeroConsultorio = scanner.nextLine()
+                // Registro de Paciente
+                println("Ingrese el DNI del paciente:")
+                val dni = readLine()!!
+                println("Ingrese el nombre del paciente:")
+                val nombre = readLine()!!
+                println("Ingrese el apellido del paciente:")
+                val apellido = readLine()!!
+                println("Ingrese la fecha de nacimiento del paciente:")
+                val fechaNacimiento = readLine()!!
+                println("Ingrese la dirección del paciente:")
+                val direccion = readLine()!!
+                println("Ingrese la ciudad de procedencia del paciente:")
+                val ciudadProcedencia = readLine()!!
+                println("Ingrese el número de historia clínica:")
+                val numeroHistoriaClinica = readLine()!!
+                println("Ingrese el sexo del paciente:")
+                val sexo = readLine()!!
+                println("Ingrese el grupo sanguíneo del paciente:")
+                val grupoSanguineo = readLine()!!
+                println("Ingrese la lista de medicamentos a los que es alérgico (separados por comas):")
+                val medicamentosAlergicos = readLine()!!.split(",").map { it.trim() }
 
-                val medico = Medico(
-                    dni, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia,
-                    codigoEmpleado, numeroHorasExtras, fechaIngreso, area, cargo, esEmpleadoPlanilla,
-                    salarioMensual, porcentajeAdicionalHoraExtra, honorariosPorHora, horasTotales, fechaTerminoContrato,
-                    especialidad, servicio, numeroConsultorio
+                pacientes.add(
+                    Paciente(
+                        dni, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia,
+                        numeroHistoriaClinica, sexo, grupoSanguineo, medicamentosAlergicos
+                    )
                 )
-                hospital.registrarEmpleado(medico)
-                println("Médico registrado exitosamente.")
+                println("Paciente registrado con éxito.")
             }
             3 -> {
-                // Registrar cita médica
-                scanner.nextLine() // Consumir el salto de línea
-                println("Ingrese DNI del paciente:")
-                val dniPaciente = scanner.nextLine()
-                println("Ingrese código del médico:")
-                val codigoMedico = scanner.nextLine()
-                println("Ingrese servicio de la cita médica:")
-                val servicio = scanner.nextLine()
-                println("Ingrese fecha y hora de la cita (yyyy-mm-ddTHH:mm):")
-                val fechaHora = LocalDateTime.parse(scanner.nextLine())
+                // Registro de Médico
+                println("Ingrese el DNI del médico:")
+                val dni = readLine()!!
+                println("Ingrese el nombre del médico:")
+                val nombre = readLine()!!
+                println("Ingrese el apellido del médico:")
+                val apellido = readLine()!!
+                println("Ingrese la fecha de nacimiento del médico:")
+                val fechaNacimiento = readLine()!!
+                println("Ingrese la dirección del médico:")
+                val direccion = readLine()!!
+                println("Ingrese la ciudad de procedencia del médico:")
+                val ciudadProcedencia = readLine()!!
+                println("Ingrese el código de empleado del médico:")
+                val codigoEmpleado = readLine()!!
+                println("Ingrese las horas extras trabajadas por el médico:")
+                val horasExtras = readLine()!!.toInt()
+                println("Ingrese la fecha de ingreso del médico:")
+                val fechaIngreso = readLine()!!
+                println("Ingrese el área de trabajo del médico:")
+                val area = readLine()!!
+                println("Ingrese el cargo del médico:")
+                val cargo = readLine()!!
+                println("Ingrese el salario mensual del médico:")
+                val salario = readLine()!!.toDouble()
+                println("Ingrese la especialidad del médico:")
+                val especialidad = readLine()!!
+                println("Ingrese el servicio del médico:")
+                val servicio = readLine()!!
+                println("Ingrese el número de consultorio del médico:")
+                val numeroConsultorio = readLine()!!.toInt()
 
-                val paciente = hospital.pacientes.find { it.DNI == dniPaciente }
-                val medico = hospital.medicos.find { it.codigoEmpleado == codigoMedico }
-
-                if (paciente != null && medico != null) {
-                    val cita = Cita(paciente, medico, servicio, fechaHora)
-                    hospital.registrarCita(cita)
-                    println("Cita médica registrada exitosamente.")
-                } else {
-                    println("Paciente o médico no encontrado.")
-                }
+                medicos.add(
+                    Medico(
+                        dni, nombre, apellido, fechaNacimiento, direccion, ciudadProcedencia,
+                        codigoEmpleado, horasExtras, fechaIngreso, area, cargo, true, salario, 0.0,
+                        especialidad, servicio, numeroConsultorio
+                    )
+                )
+                println("Médico registrado con éxito.")
             }
             4 -> {
-                // Listar médicos por especialidad
-                scanner.nextLine() // Consumir el salto de línea
-                println("Ingrese especialidad para listar médicos:")
-                val especialidad = scanner.nextLine()
-                val medicos = hospital.listarMedicosPorEspecialidad(especialidad)
-                if (medicos.isNotEmpty()) {
-                    println("Médicos de $especialidad:")
-                    medicos.forEach { println("${it.nombre} ${it.apellido}") }
-                } else {
-                    println("No se encontraron médicos para la especialidad $especialidad.")
+                // Registro de Cita
+                println("Ingrese el DNI del paciente:")
+                val dniPaciente = readLine()!!
+                val paciente = pacientes.find { it.DNI == dniPaciente }
+                if (paciente == null) {
+                    println("Paciente no encontrado.")
+                    continue
                 }
+                println("Ingrese el código del médico:")
+                val codigoMedico = readLine()!!
+                val medico = medicos.find { it.codigoEmpleado == codigoMedico }
+                if (medico == null) {
+                    println("Médico no encontrado.")
+                    continue
+                }
+                println("Ingrese la fecha de la cita:")
+                val fecha = readLine()!!
+                println("Ingrese la hora de la cita:")
+                val hora = readLine()!!
+                println("Ingrese el servicio para la cita (Ejemplo: cirugía, oftalmología):")
+                val servicio = readLine()!!
+
+                citas.add(Cita(paciente, medico, fecha, hora, servicio))
+                println("Cita registrada con éxito.")
             }
             5 -> {
-                // Listar pacientes atendidos por médico
-                scanner.nextLine() // Consumir el salto de línea
-                println("Ingrese código del médico:")
-                val codigoMedico = scanner.nextLine()
-                val pacientes = hospital.listarPacientesAtendidosPorMedico(codigoMedico)
-                if (pacientes.isNotEmpty()) {
-                    println("Pacientes atendidos por el médico con código $codigoMedico:")
-                    pacientes.forEach { println("${it.nombre} ${it.apellido}") }
+                // Listar Médicos por Especialidad
+                println("Ingrese la especialidad para listar médicos:")
+                val especialidad = readLine()!!
+                val medicosEspecialidad = medicos.filter { it.especialidad == especialidad }
+                if (medicosEspecialidad.isEmpty()) {
+                    println("No se encontraron médicos con esa especialidad.")
                 } else {
-                    println("No se encontraron pacientes atendidos por el médico con código $codigoMedico.")
+                    medicosEspecialidad.forEach {
+                        println("DNI: ${it.DNI}, Nombre: ${it.nombre} ${it.apellido}, Servicio: ${it.servicio}, Consultorio: ${it.numeroConsultorio}")
+                    }
                 }
             }
             6 -> {
-                // Salir
+                // Listar Pacientes atendidos por Médico
+                println("Ingrese el código del médico:")
+                val codigoMedico = readLine()!!
+                val citasMedico = citas.filter { it.medico.codigoEmpleado == codigoMedico }
+                if (citasMedico.isEmpty()) {
+                    println("No se encontraron citas para el médico con ese código.")
+                } else {
+                    val pacientesAtendidos = citasMedico.map { it.paciente }
+                    pacientesAtendidos.forEach {
+                        println("Nombre: ${it.nombre} ${it.apellido}")
+                    }
+                }
+            }
+            7 -> {
                 println("Saliendo del programa...")
-                return
+                break
             }
             else -> {
-                println("Opción inválida. Intente nuevamente.")
+                println("Opción no válida. Intente nuevamente.")
             }
         }
     }

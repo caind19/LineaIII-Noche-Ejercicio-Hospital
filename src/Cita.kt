@@ -1,8 +1,7 @@
-import java.time.LocalDateTime
-
-class Cita (
+class Cita(
     val paciente: Paciente,
     val medico: Medico,
-    val servicio: String,
-    val fechaHora: LocalDateTime,
+    val fecha: String,
+    val hora: String,
+    val servicio: String
 )
